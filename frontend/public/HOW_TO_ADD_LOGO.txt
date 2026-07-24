@@ -1,0 +1,38 @@
+HOW TO ADD YOUR CHURCH LOGO — CODE METHOD
+==========================================
+
+You have two ways to set the logo. This file explains the CODE method
+(editing files directly). If you'd rather not touch code at all, use the
+Admin Dashboard method instead — see the note at the bottom.
+
+CODE METHOD
+-----------
+1. Get your logo file ready. A square image works best (e.g. 512x512px),
+   PNG with a transparent background if possible.
+
+2. Drop it into THIS folder (frontend/public/) using ANY of these names —
+   the site automatically tries each one in order, so it doesn't matter
+   which image format you have:
+
+       logo.png
+       logo.jpg
+       logo.jpeg
+       logo.svg
+       logo.webp
+
+3. That's it — no code changes needed. Both the navbar and the loading
+   screen will pick it up automatically.
+
+4. Restart your dev server (or just refresh, if it's already running) to
+   see it.
+
+If you want to use a different filename entirely, open
+frontend/src/lib/useLogo.js and edit the STATIC_CANDIDATES list at the top.
+
+
+ADMIN DASHBOARD METHOD (no code editing at all)
+------------------------------------------------
+Go to /admin/settings → Branding → click "Upload" next to "Church Logo",
+and pick your file from your computer. This is usually the easier path —
+it uploads straight to the database and shows up immediately, and takes
+priority over the file-based method above if both are set.

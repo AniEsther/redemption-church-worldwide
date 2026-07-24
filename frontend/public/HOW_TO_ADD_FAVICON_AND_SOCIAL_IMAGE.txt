@@ -1,0 +1,21 @@
+HOW TO ADD YOUR FAVICON AND SOCIAL PREVIEW IMAGE
+===================================================
+
+Two files referenced in index.html don't exist yet — drop them into this
+same public/ folder and they'll work automatically, no code changes needed.
+
+1. FAVICON (the small icon in the browser tab)
+   File name: favicon.png
+   Size: 512x512px (or at least 64x64px) works fine, square, PNG
+   Tip: your church logo, cropped to a square, works well here.
+
+2. SOCIAL PREVIEW IMAGE (shown when your site is shared on WhatsApp,
+   Facebook, etc.)
+   File name: social-preview.png
+   Size: 1200x630px is the standard/recommended size
+   Tip: a nice photo of the church or a simple branded graphic with your
+   church name works well — this is what people see as a preview image
+   before they click your link.
+
+Both are already wired up in frontend/index.html — you just need to supply
+the actual image files with these exact names in this folder.
