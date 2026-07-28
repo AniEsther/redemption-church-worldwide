@@ -7,9 +7,6 @@ import {
   Phone,
   Mail,
   Clock,
-  Quote,
-  ChevronLeft,
-  ChevronRight,
   X,
 } from 'lucide-react'
 import Reveal from '../components/Reveal'
@@ -20,6 +17,7 @@ import EventDateBadge from '../components/EventDateBadge'
 import SermonCard from '../components/SermonCard'
 import BankAccountCard from '../components/BankAccountCard'
 import HomeGallerySlider from '../components/HomeGallerySlider'
+import HomeTestimonialSlider from '../components/HomeTestimonialSlider'
 import { api } from '../lib/api'
 import { useApiData, useApiObject } from '../lib/useApiData'
 import { getNextOccurrence, getNextProgrammeDate, formatProgrammeSchedule } from '../lib/nextOccurrence'
@@ -59,7 +57,7 @@ function Hero() {
   const { data: identity } = useApiObject(api.getSettings, IDENTITY_FALLBACK)
 
   return (
-    <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-b from-brown-800 via-brown-900 to-ink text-cream">
+    <section id="hero" className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-b from-brown-800 via-brown-900 to-ink text-cream">
       <div className="relative z-10 mx-auto max-w-4xl px-6 py-40 text-center">
         <h1 className="animate-rise mt-6 font-display text-4xl font-bold leading-tight sm:text-6xl" style={{ animationDelay: '0.15s' }}>
           Welcome to <span className="text-orange-200">{identity.churchName}</span>
@@ -434,10 +432,7 @@ function Gallery() {
 
 /* ---------------- Testimonials ---------------- */
 function Testimonials() {
-  const [index, setIndex] = useState(0)
-  const t = TESTIMONIALS[index]
-
-  const go = (dir) => setIndex((i) => (i + dir + TESTIMONIALS.length) % TESTIMONIALS.length)
+  const { data: testimonials } = useApiData(api.getTestimonies, TESTIMONIALS)
 
   return (
     <section className="bg-brown-50 py-24 dark:bg-brown-900">
@@ -449,29 +444,8 @@ function Testimonials() {
           </h2>
         </Reveal>
 
-        <Reveal delay={2} className="relative mt-12 rounded-2xl bg-white p-10 shadow-lg dark:bg-brown-800">
-          <Quote className="mx-auto h-8 w-8 text-orange-400" />
-          <p key={index} className="animate-rise mt-6 font-display text-lg italic leading-relaxed text-brown-700 dark:text-cream">
-            &ldquo;{t.text}&rdquo;
-          </p>
-          <p className="eyebrow mt-6 text-xs text-orange-500">{t.name}</p>
-
-          <div className="mt-8 flex items-center justify-center gap-4">
-            <button onClick={() => go(-1)} className="rounded-full border border-brown-200 p-2 text-brown-500 hover:border-orange-400 hover:text-orange-500 dark:border-brown-600">
-              <ChevronLeft className="h-4 w-4" />
-            </button>
-            {TESTIMONIALS.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setIndex(i)}
-                aria-label={`Testimonial ${i + 1}`}
-                className={`h-2 w-2 rounded-full transition-all ${i === index ? 'w-6 bg-orange-400' : 'bg-brown-200 dark:bg-brown-600'}`}
-              />
-            ))}
-            <button onClick={() => go(1)} className="rounded-full border border-brown-200 p-2 text-brown-500 hover:border-orange-400 hover:text-orange-500 dark:border-brown-600">
-              <ChevronRight className="h-4 w-4" />
-            </button>
-          </div>
+        <Reveal delay={2}>
+          <HomeTestimonialSlider testimonials={testimonials} intervalMs={5000} />
         </Reveal>
       </div>
     </section>

@@ -21,11 +21,23 @@ export default function Navbar({ dark, setDark }) {
   const location = useLocation()
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
+    const onScroll = () => {
+      const hero = document.getElementById('hero')
+      // On the homepage, stay dark/transparent for the full height of the
+      // hero section — only switch to the solid cream bar once the page's
+      // actual cream background has scrolled up to meet the navbar.
+      // On any other page (no hero present), a small scroll is enough.
+      const threshold = hero ? hero.offsetHeight - 80 : 40
+      setScrolled(window.scrollY > threshold)
+    }
     onScroll()
     window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [location.pathname])
 
   useEffect(() => setOpen(false), [location])
 
@@ -34,7 +46,7 @@ export default function Navbar({ dark, setDark }) {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        solid ? 'bg-cream/95 shadow-md backdrop-blur-sm dark:bg-brown-900/95' : 'bg-transparent'
+        solid ? 'bg-cream/95 shadow-md backdrop-blur-sm' : 'bg-transparent'
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
@@ -57,7 +69,7 @@ export default function Navbar({ dark, setDark }) {
           )}
           <span
             className={`font-body text-sm font-semibold leading-tight tracking-tight sm:text-base ${
-              solid ? 'text-brown-700 dark:text-cream' : 'text-cream'
+              solid ? 'text-brown-700' : 'text-cream'
             }`}
           >
             The
@@ -77,7 +89,7 @@ export default function Navbar({ dark, setDark }) {
               to={l.to}
               className={({ isActive }) =>
                 `eyebrow text-[11px] transition-colors hover:text-orange-500 ${
-                  isActive ? 'text-orange-500' : solid ? 'text-brown-600 dark:text-cream/80' : 'text-cream/90'
+                  isActive ? 'text-orange-500' : solid ? 'text-brown-600' : 'text-cream/90'
                 }`
               }
             >
@@ -104,7 +116,7 @@ export default function Navbar({ dark, setDark }) {
           </Link>
           <button
             aria-label="Toggle menu"
-            className={`lg:hidden ${solid ? 'text-brown-700 dark:text-cream' : 'text-cream'}`}
+            className={`lg:hidden ${solid ? 'text-brown-700' : 'text-cream'}`}
             onClick={() => setOpen(!open)}
           >
             {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
