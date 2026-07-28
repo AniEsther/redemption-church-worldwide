@@ -46,7 +46,9 @@ export default function Navbar({ dark, setDark }) {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        solid ? 'bg-cream/95 shadow-md backdrop-blur-sm' : 'bg-transparent'
+        solid
+          ? 'bg-cream/95 shadow-md backdrop-blur-sm'
+          : 'border-b border-white/10 bg-ink/85 shadow-lg backdrop-blur-md'
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
